@@ -20,13 +20,14 @@ print("Connect status:", CON_STR[state])
 
 #opencv stores images in BGR format
 def resize(image):
+    #uncomment this for cropped image
     # x_start, x_end = 170, 300
     # y_start, y_end = 0, 238
 
     # cropped_image = image[y_start:y_end, x_start:x_end]
-    #resize_image = cv.resize(cropped_image, (200, 200))
-    resize_image = cv.resize(image, (200, 200))
+    # resize_image = cv.resize(cropped_image, (200, 200))
 
+    resize_image = cv.resize(image, (200, 200))
     cv.imshow('resize_image', resize_image)
     cv.waitKey(0)
     return resize_image
@@ -51,17 +52,8 @@ def getCoordinates(image, x = (170, 300), y = (-190, 238)):
 
     return coordinates
 
-
-    adjusted_coordinates = [coord for coord in coordinates if 
-                            coord[1] >= x[0] and coord[1] <= x[1] or
-                            coord[0] >= y[0] and coord[0] <= y[1]]
-    print(adjusted_coordinates)
-    
-    return adjusted_coordinates
-
 def plotCoordinates(coordinates, size = 7):
     coordinates_np = np.array(coordinates)
-    #plt.plot(coordinates_np[:, 1], coordinates_np[:, 0], "-o", markersize = size)
     plt.plot(coordinates_np[:, 1], coordinates_np[:, 0], "k.", markersize = size)
     plt.gca().invert_yaxis()
     plt.show()
@@ -70,7 +62,7 @@ def plotCoordinates(coordinates, size = 7):
 def drawCoordinates(coordinates):
 
     for x, y in coordinates:
-        #addinag values to the coordinates so they will be in range
+        #adding values to the coordinates so they will be in range
         x1 = x+ 175
         y1 = y + 100
         print(f"({x1}, {y1})")
@@ -99,21 +91,21 @@ if __name__ == "__main__":
     modified_image = canny(resized_image, 'y')
     coordinates = getCoordinates(modified_image)
     plotCoordinates(coordinates, 3)
-    #drawCoordinates(coordinates)
+    drawCoordinates(coordinates)
 
     image_2 = cv.imread("dog.jpeg", 0)
     resized_image = resize(image_2)
     modified_image = canny(resized_image, 'y')
     coordinates = getCoordinates(modified_image)
     plotCoordinates(coordinates, 3)
-    #drawCoordinates(coordinates)
+    drawCoordinates(coordinates)
 
     image_3 = cv.imread("shapes.jpg", 0)
     resized_image = resize(image_3)
     modified_image = canny(resized_image)
     coordinates = getCoordinates(modified_image)
     plotCoordinates(coordinates)
-    #drawCoordinates(coordinates)
+    drawCoordinates(coordinates)
 
     image_4 = cv.imread("stickfigure.jpeg", 0)
     resized_image = resize(image_4)
@@ -121,7 +113,7 @@ if __name__ == "__main__":
     coordinates = getCoordinates(modified_image)
     print(coordinates)
     plotCoordinates(coordinates)
-    #drawCoordinates(coordinates)
+    drawCoordinates(coordinates)
 
     image_5 = cv.imread("circle.jpg", 0)
     resized_image = resize(image_5)
@@ -129,7 +121,7 @@ if __name__ == "__main__":
     coordinates = getCoordinates(modified_image)
     print(coordinates)
     plotCoordinates(coordinates)
-    #drawCoordinates(coordinates)
+    drawCoordinates(coordinates)
 
     image_6 = cv.imread("line.jpg", 0)
     resized_image = resize(image_6)
@@ -137,7 +129,7 @@ if __name__ == "__main__":
     coordinates = getCoordinates(modified_image)
     print(coordinates)
     plotCoordinates(coordinates)
-    #drawCoordinates(coordinates)
+    drawCoordinates(coordinates)
     
     dType.DisconnectDobot(api)
 
