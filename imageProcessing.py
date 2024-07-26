@@ -6,16 +6,16 @@ import DobotDllType as dType
 import time as t
 
 
-CON_STR = {
-    dType.DobotConnect.DobotConnect_NoError:  "DobotConnect_NoError",
-    dType.DobotConnect.DobotConnect_NotFound: "DobotConnect_NotFound",
-    dType.DobotConnect.DobotConnect_Occupied: "DobotConnect_Occupied"}
+# CON_STR = {
+#     dType.DobotConnect.DobotConnect_NoError:  "DobotConnect_NoError",
+#     dType.DobotConnect.DobotConnect_NotFound: "DobotConnect_NotFound",
+#     dType.DobotConnect.DobotConnect_Occupied: "DobotConnect_Occupied"}
 
-api = dType.load()
+# api = dType.load()
 
-#Connect Dobot
-state = dType.ConnectDobot(api, "COM10", 115200)[0]
-print("Connect status:", CON_STR[state])
+# #Connect Dobot
+# state = dType.ConnectDobot(api, "COM10", 115200)[0]
+# print("Connect status:", CON_STR[state])
 
 
 #opencv stores images in BGR format
@@ -44,10 +44,10 @@ def canny(image, msg = 'n'):
     cv.imshow('canny_image', canny_image)
     cv.waitKey(0)
     
-    return canny_image  
+    return canny_image
 
 #gets coordinates of the image
-def getCoordinates(image, x = (170, 300), y = (-190, 238)):
+def getCoordinates(image):
     coordinates = np.argwhere(image > 0)
 
     return coordinates
@@ -79,17 +79,18 @@ def drawCoordinates(coordinates):
 
 if __name__ == "__main__":
 
-    #gets the home parameters using the api
-    print(dType.GetHOMEParams(api))
-    #sets the home parameters
-    dType.SetHOMEParams(api, 250, 0, 0, 0)
-    #prints the home parameters to check if it changed
-    print(dType.GetHOMEParams(api))
+    # #gets the home parameters using the api
+    # print(dType.GetHOMEParams(api))
+    # #sets the home parameters
+    # dType.SetHOMEParams(api, 250, 0, 0, 0)
+    # #prints the home parameters to check if it changed
+    # print(dType.GetHOMEParams(api))
 
     image_1 = cv.imread("landscape.jpg",0)
     resized_image = resize(image_1)
     modified_image = canny(resized_image, 'y')
     coordinates = getCoordinates(modified_image)
+    print(coordinates)
     plotCoordinates(coordinates, 3)
     drawCoordinates(coordinates)
 
